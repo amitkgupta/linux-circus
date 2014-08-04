@@ -15,6 +15,7 @@ var _ = Describe("LRPStartAuction", func() {
       "process_guid": "some-guid",
       "instances": 1,
       "stack": "some-stack",
+      "root_fs": "docker:///docker.com/docker",
       "actions": [
         {
           "action": "download",
@@ -45,8 +46,9 @@ var _ = Describe("LRPStartAuction", func() {
     },
     "instance_guid": "some-instance-guid",
     "index": 2,
-    "state": 1,
-    "updated_at": 1138
+    "num_azs":4,
+    "updated_at": 1138,
+    "state": 1
   }`
 
 	BeforeEach(func() {
@@ -57,11 +59,12 @@ var _ = Describe("LRPStartAuction", func() {
 			DesiredLRP: DesiredLRP{
 				ProcessGuid: "some-guid",
 
-				Instances: 1,
-				Stack:     "some-stack",
-				MemoryMB:  1024,
-				DiskMB:    512,
-				Routes:    []string{"route-1", "route-2"},
+				RootFSPath: "docker:///docker.com/docker",
+				Instances:  1,
+				Stack:      "some-stack",
+				MemoryMB:   1024,
+				DiskMB:     512,
+				Routes:     []string{"route-1", "route-2"},
 				Ports: []PortMapping{
 					{HostPort: 1234, ContainerPort: 5678},
 				},
@@ -79,6 +82,7 @@ var _ = Describe("LRPStartAuction", func() {
 				},
 			},
 
+			NumAZs:    4,
 			State:     LRPStartAuctionStatePending,
 			UpdatedAt: 1138,
 		}
